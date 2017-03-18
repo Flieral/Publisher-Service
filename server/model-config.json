@@ -16,5 +16,17 @@
   "account": {
     "dataSource": "redisDS",
     "public": true
+  },
+  "publisher": {
+    "dataSource": "redisDS",
+    "public": true
+  },
+  "placement": {
+    "dataSource": "redisDS",
+    "public": true
+  },
+  "setting": {
+    "dataSource": "redisDS",
+    "public": true
   }
 }
