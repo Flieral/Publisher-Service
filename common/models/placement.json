@@ -34,7 +34,18 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "settings": {
+      "type": "hasOne",
+      "model": "setting",
+      "foreignKey": "placementID"
+    },
+    "publisher": {
+      "type": "belongsTo",
+      "model": "publisher",
+      "foreignKey": "placementID"
+    }
+  },
   "acls": [],
   "methods": {}
 }

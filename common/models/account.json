@@ -16,7 +16,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "publishers": {
+      "type": "hasMany",
+      "model": "publisher",
+      "foreignKey": "accountID"
+    }
+  },
   "acls": [],
   "methods": {}
 }

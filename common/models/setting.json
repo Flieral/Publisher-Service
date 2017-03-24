@@ -34,7 +34,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "placement": {
+      "type": "belongsTo",
+      "model": "placement",
+      "foreignKey": "settingID"
+    }
+  },
   "acls": [],
   "methods": {}
 }
