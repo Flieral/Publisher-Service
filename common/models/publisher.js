@@ -5,6 +5,7 @@ var relationMethodPrefixes = [
   'createChangeStream',
   'upsertWithWhere',
   'patchOrCreate',
+  'exists',
   'prototype.patchAttributes'
 ]
 
