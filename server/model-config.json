@@ -28,5 +28,9 @@
   "setting": {
     "dataSource": "redisDS",
     "public": true
+  },
+  "client": {
+    "dataSource": "redisDS",
+    "public": true
   }
 }

@@ -1,0 +1,79 @@
+{
+  "name": "client",
+  "plural": "Clients",
+  "base": "User",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "email": {
+      "type": "string",
+      "required": true,
+      "index": true
+    },
+    "companyName": {
+      "type": "string",
+      "required": true,
+      "index": true
+    },
+    "username": {
+      "type": "string",
+      "required": true,
+      "index": true
+    },
+    "password": {
+      "type": "string",
+      "required": true,
+      "index": true
+    },
+    "time": {
+      "type": "number",
+      "required": true,
+      "index": true
+    },
+    "registrationCountry": {
+      "type": [
+        "string"
+      ],
+      "required": true,
+      "index": true
+    },
+    "registrationMacAddress": {
+      "type": [
+        "string"
+      ],
+      "required": true,
+      "index": true
+    },
+    "registrationStatus": {
+      "type": "string",
+      "required": true,
+      "index": true
+    },
+    "suspendStatus": {
+      "type": "string",
+      "required": true,
+      "index": true
+    },
+    "webhookURL": {
+      "type": "string",
+      "required": true,
+      "index": true
+    },
+    "attempt": {
+      "type": "number",
+      "required": true,
+      "index": true
+    },
+    "message": {
+      "type": "string",
+      "required": true,
+      "index": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
