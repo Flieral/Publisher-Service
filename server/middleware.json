@@ -45,8 +45,7 @@
     "loopback#urlNotFound": {}
   },
   "final:after": {
-    "strong-error-handler": {},
-    "loopback#errorHandler": {
+    "strong-error-handler": {
       "params": {
         "includeStack": false
       }
