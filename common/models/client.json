@@ -6,12 +6,19 @@
     "validateUpsert": true
   },
   "properties": {
-    "email": {
+    "companyName": {
       "type": "string",
       "required": true,
       "index": true
     },
-    "companyName": {
+    "password": {
+      "type": "string",
+      "required": true,
+      "index": true,
+      "min": 6,
+      "pattern": "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]!$%@#£€*?&]{6,}$"
+    },
+    "email": {
       "type": "string",
       "required": true,
       "index": true
@@ -21,59 +28,42 @@
       "required": true,
       "index": true
     },
-    "password": {
+    "time": {
+      "type": "number",
+      "required": true,
+      "index": true,
+      "pattern": "^[0-9]{10}$"
+    },
+    "registrationCountry": {
       "type": "string",
       "required": true,
       "index": true
     },
-    "time": {
-      "type": "number",
-      "required": true,
-      "index": true
-    },
-    "registrationCountry": {
-      "type": [
-        "string"
-      ],
-      "required": true,
-      "index": true
-    },
-    "registrationMacAddress": {
-      "type": [
-        "string"
-      ],
+    "registrationIPAddress": {
+      "type": "string",
       "required": true,
       "index": true
     },
     "registrationStatus": {
       "type": "string",
-      "required": true,
-      "index": true
-    },
-    "suspendStatus": {
-      "type": "string",
-      "required": true,
-      "index": true
+      "required": false,
+      "index": false
     },
     "webhookURL": {
       "type": "string",
-      "required": true,
-      "index": true
-    },
-    "attempt": {
-      "type": "number",
-      "required": true,
-      "index": true
+      "required": false,
+      "index": false
     },
     "message": {
       "type": "string",
-      "required": true,
-      "index": true
+      "required": false,
+      "index": false
     }
   },
   "validations": [],
   "relations": {},
-  "acls": [{
+  "acls": [
+    {
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "DENY"
@@ -121,12 +111,20 @@
       "property": "confirm"
     },
     {
+      "accessType": "EXECUTE",
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "resetPassword",
-      "accessType": "EXECUTE"
+      "property": "resetPassword"
     }
+  ],
+  "hidden": [
+    "id",
+    "realm",
+    "message",
+    "webhookURL",
+    "emailVerified",
+    "registrationStatus"
   ],
   "methods": {}
 }
