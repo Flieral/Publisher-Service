@@ -8,6 +8,7 @@
     "posttest": "npm run lint && nsp check"
   },
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "columnify": "^1.5.4",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
