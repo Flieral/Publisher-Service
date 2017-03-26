@@ -12,20 +12,19 @@ module.exports = function (client) {
 
   methodDisabler.disableOnlyTheseMethods(client, relationMethodPrefixes)
 
-  client.validatesLengthOf('password', { min: 6})
-  client.validatesFormatOf('password', { with: "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]!$%@#£€*?&]{6,}$" })
-  client.validatesFormatOf('time', { with: "^[0-9]{10}$" })
-  client.validatesInclusionOf('registrationCountry', { in: ['US', 'IR'] })
+  client.validatesLengthOf('password', {
+    min: 6
+  })
+  client.validatesInclusionOf('registrationCountry', { in: ['US', 'IR']
+  })
 
   //send verification email after registration
   client.afterRemote('create', function (context, userInstance, next) {
-    console.log('> user.afterRemote triggered')
-
     var options = {
       type: 'email',
       to: userInstance.email,
-      from: 'noreply@loopback.com',
-      subject: 'Thanks for registering.',
+      from: 'noreply@Flieral.com',
+      subject: 'Thanks for Registering.',
       template: path.resolve(__dirname, '../../server/views/verify.ejs'),
       redirect: '/verified',
       user: client
@@ -55,11 +54,10 @@ module.exports = function (client) {
     client.app.models.Email.send({
       to: info.email,
       from: info.email,
-      subject: 'Password reset',
+      subject: 'Password Reset',
       html: html
     }, function (err) {
-      if (err) return console.log('> error sending password reset email')
-      console.log('> sending password reset email to:', info.email)
+      if (err) return next(err)
     })
   })
 }
