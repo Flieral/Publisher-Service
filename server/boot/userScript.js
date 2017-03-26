@@ -26,7 +26,8 @@ module.exports = function (app) {
       time: 1234567891,
       companyName: "Flieral",
       registrationCountry: "US",
-      registrationIPAddress: "0.0.0.0"
+      registrationIPAddress: "0.0.0.0",
+      emailVerified: true
     },
     {
       username: 'Support',
