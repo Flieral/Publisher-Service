@@ -5,24 +5,38 @@ var relationMethodPrefixes = [
 ]
 
 module.exports = function (app) {
-  var User = app.models.User
+  var User = app.models.client
   var Role = app.models.Role
   var RoleMapping = app.models.RoleMapping
 
   var users = [{
       username: 'MrWooJ',
-      email: 'hurricanc@gmail.com',
-      password: 'Fl13r4lAlirezaPass'
+      email: 'CEO@Flieral.com',
+      password: 'Fl13r4lAlirezaPass',
+      time: 1234567891,
+      companyName: "Flieral",
+      registrationCountry: "US",
+      registrationIPAddress: "0.0.0.0",
+      emailVerified: true
     },
     {
       username: 'Mohammad4x',
-      email: 'm.ferdosi94@gmail.com',
-      password: 'Fl13r4lMohammadPass'
+      email: 'CTO4@Flieral.com',
+      password: 'Fl13r4lMohammadPass',
+      time: 1234567891,
+      companyName: "Flieral",
+      registrationCountry: "US",
+      registrationIPAddress: "0.0.0.0"
     },
     {
       username: 'Support',
-      email: 'support@flieral.com',
-      password: 'Fl13r4lSupportPass'
+      email: 'Support@Flieral.com',
+      password: 'Fl13r4lSupportPass',
+      time: 1234567891,
+      companyName: "Flieral",
+      registrationCountry: "US",
+      registrationIPAddress: "0.0.0.0",
+      emailVerified: true
     }
   ]
 
@@ -68,5 +82,4 @@ module.exports = function (app) {
     })
   })
 
-  methodDisabler.disableAllExcept(User, relationMethodPrefixes)
 }
