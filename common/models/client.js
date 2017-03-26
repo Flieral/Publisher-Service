@@ -25,8 +25,6 @@ module.exports = function (client) {
       to: userInstance.email,
       from: 'noreply@Flieral.com',
       subject: 'Thanks for Registering.',
-      template: path.resolve(__dirname, '../../server/views/verify.ejs'),
-      redirect: '/verified',
       user: client
     }
 
@@ -34,11 +32,10 @@ module.exports = function (client) {
       if (err) return next(err)
 
       console.log('> verification email sent:', response)
-
+      
       context.res.render('response', {
         title: 'Signed up successfully',
-        content: 'Please check your email and click on the verification link ' -
-          'before logging in.',
+        content: 'Please check your email and click on the verification link before logging in.',
         redirectTo: '/',
         redirectToLinkText: 'Log in'
       })

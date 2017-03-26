@@ -31,7 +31,7 @@ module.exports = function (app) {
       throw err
 
     var role1 = {
-      name: 'Founder'
+      name: 'founder'
     }
     Role.create(role1, function (err, role) {
       if (err)
@@ -53,7 +53,7 @@ module.exports = function (app) {
     })
 
     var role2 = {
-      name: 'Admin'
+      name: 'admin'
     }
     Role.create(role2, function (err, role) {
       if (err)
