@@ -15,8 +15,7 @@
       "type": "string",
       "required": true,
       "index": true,
-      "min": 6,
-      "pattern": "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]!$%@#£€*?&]{6,}$"
+      "min": 6
     },
     "email": {
       "type": "string",
@@ -31,8 +30,7 @@
     "time": {
       "type": "number",
       "required": true,
-      "index": true,
-      "pattern": "^[0-9]{10}$"
+      "index": true
     },
     "registrationCountry": {
       "type": "string",
@@ -62,11 +60,22 @@
   },
   "validations": [],
   "relations": {},
-  "acls": [
-    {
+  "acls": [{
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Founder",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "Admin",
+      "permission": "ALLOW"
     },
     {
       "principalType": "ROLE",
