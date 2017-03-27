@@ -18,6 +18,68 @@ module.exports = function (client) {
   client.validatesInclusionOf('registrationCountry', { in: ['US', 'IR']
   })
 
+
+  // Change Password Remote Method 
+  client.changePassword = function (data, req, res, cb) {
+    if (!req.accessToken)
+      return res.sendStatus(401)
+
+    //verify passwords match
+    if (!req.body.password || !req.body.confirmation ||
+      req.body.password !== req.body.confirmation) {
+      return res.sendStatus(400, new Error('Passwords do not match'))
+    }
+
+    client.findById(req.accessToken.userId, function (err, user) {
+      if (err) return res.sendStatus(404)
+      user.updateAttribute('password', req.body.password, function (err, user) {
+        if (err) return res.sendStatus(404)
+        console.log('> password reset processed successfully');
+        res.render('response', {
+          title: 'Password reset success',
+          content: 'Your password has been reset successfully',
+          redirectTo: '/',
+          redirectToLinkText: 'Log in'
+        })
+      })
+    })
+
+    cb(null, 'Password reset success')
+  }
+
+  client.remoteMethod('changePassword', {
+    accepts: [{
+      arg: 'data',
+      type: 'object',
+      http: {
+        source: 'body'
+      }
+    }, {
+      arg: 'req',
+      type: 'object',
+      http: {
+        source: 'req'
+      }
+    }, {
+      arg: 'res',
+      type: 'object',
+      http: {
+        source: 'res'
+      }
+    }],
+    description: 'change password method with accessToken',
+    http: {
+      path: '/changePassword',
+      verb: 'POST',
+      status: 200,
+      errorStatus: 400
+    },
+    returns: {
+      arg: 'response',
+      type: 'string'
+    }
+  })
+
   //send verification email after registration
   client.afterRemote('create', function (context, userInstance, next) {
     var options = {
@@ -32,7 +94,7 @@ module.exports = function (client) {
       if (err) return next(err)
 
       console.log('> verification email sent:', response)
-      
+
       context.res.render('response', {
         title: 'Signed up successfully',
         content: 'Please check your email and click on the verification link before logging in.',
