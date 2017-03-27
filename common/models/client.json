@@ -1,7 +1,7 @@
 {
   "name": "client",
   "base": "User",
-  "idInjection": false,
+  "idInjection": true,
   "options": {
     "validateUpsert": true
   },
@@ -71,7 +71,8 @@
       "principalType": "ROLE",
       "principalId": "admin",
       "permission": "ALLOW"
-  }],
+    }
+  ],
   "hidden": [
     "id",
     "realm",

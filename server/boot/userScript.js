@@ -10,7 +10,7 @@ module.exports = function (app) {
   var RoleMapping = app.models.RoleMapping
 
   var users = [{
-      id: 1,
+      Id: 1,
       username: 'MrWooJ',
       email: 'CEO@Flieral.com',
       password: 'Fl13r4lAlirezaPass',
@@ -21,7 +21,7 @@ module.exports = function (app) {
       emailVerified: true
     },
     {
-      id: 2,
+      Id: 2,
       username: 'Mohammad4x',
       email: 'CTO@Flieral.com',
       password: 'Fl13r4lMohammadPass',
@@ -32,7 +32,7 @@ module.exports = function (app) {
       emailVerified: true
     },
     {
-      id: 3,
+      Id: 3,
       username: 'Support',
       email: 'Support@Flieral.com',
       password: 'Fl13r4lSupportPass',
@@ -44,7 +44,7 @@ module.exports = function (app) {
     }
   ]
 
-  User.replaceOrCreate(users,null, function (err, users) {
+  User.replaceOrCreate(users, null, function (err, users) {
     if (err)
       throw err
 
