@@ -1,5 +1,3 @@
-'use strict';
-
 var methodDisabler = require('../../public/methodDisabler.js')
 var relationMethodPrefixes = [
   'createChangeStream',
