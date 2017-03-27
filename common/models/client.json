@@ -1,0 +1,91 @@
+{
+  "name": "client",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "companyName": {
+      "type": "string",
+      "required": true,
+      "index": true
+    },
+    "password": {
+      "type": "string",
+      "required": true,
+      "index": true,
+      "min": 6
+    },
+    "email": {
+      "type": "string",
+      "required": true,
+      "index": true
+    },
+    "username": {
+      "type": "string",
+      "required": true,
+      "index": true
+    },
+    "time": {
+      "type": "number",
+      "required": true,
+      "index": true
+    },
+    "registrationCountry": {
+      "type": "string",
+      "required": true,
+      "index": true
+    },
+    "registrationIPAddress": {
+      "type": "string",
+      "required": true,
+      "index": true
+    },
+    "registrationStatus": {
+      "type": "string",
+      "required": false,
+      "index": false
+    },
+    "webhookURL": {
+      "type": "string",
+      "required": false,
+      "index": false
+    },
+    "message": {
+      "type": "string",
+      "required": false,
+      "index": false
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [{
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "founder",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "changePassword"
+    }
+  ],
+  "hidden": [
+    "id",
+    "realm",
+    "message",
+    "webhookURL",
+    "emailVerified",
+    "registrationStatus"
+  ],
+  "methods": {}
+}
