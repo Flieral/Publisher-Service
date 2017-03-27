@@ -1,5 +1,8 @@
 var config = require('../../server/config.json')
 var path = require('path')
+var utility = require('../../public/utility.js')
+
+var PRODUCTION = false
 
 var methodDisabler = require('../../public/methodDisabler.js')
 var relationMethodPrefixes = [
@@ -12,12 +15,44 @@ module.exports = function (client) {
 
   methodDisabler.disableOnlyTheseMethods(client, relationMethodPrefixes)
 
-  client.validatesLengthOf('password', {
-    min: 6
-  })
-  client.validatesInclusionOf('registrationCountry', { in: ['US', 'IR']
+  client.validatesLengthOf('password', {min: 6})
+  client.validatesInclusionOf('registrationCountry', {in: ['US', 'IR']})
+  client.validatesUniquenessOf('companyName', {message: 'companyName is not unique'});  
+
+  // Decrypt Password for Front/Back Communications
+  client.beforeRemote('login', function (ctx, modelInstance, next) {
+    if (PRODUCTION) {
+      var pass1 = utility.base64Decoding(ctx.args.credentials.password).toString()
+      var pass2 = utility.base64Decoding(ctx.req.body.password).toString()
+      ctx.args.credentials.password = pass1
+      ctx.req.body.password = pass2
+    }
+    next()
   })
 
+  client.beforeRemote('create', function (ctx, modelInstance, next) {
+    if (PRODUCTION) {
+      var pass1 = utility.base64Decoding(ctx.args.data.password).toString()
+      var pass2 = utility.base64Decoding(ctx.req.body.password).toString()
+      ctx.args.data.password = pass1
+      ctx.req.body.password = pass2
+    }
+    next()
+  })
+
+  client.beforeRemote('changePassword', function (ctx, modelInstance, next) {
+    if (PRODUCTION) {
+      var pass1 = utility.base64Decoding(ctx.args.data.password).toString()
+      var pass2 = utility.base64Decoding(ctx.req.body.password).toString()
+      var conf1 = utility.base64Decoding(ctx.args.data.confirmation).toString()
+      var conf2 = utility.base64Decoding(ctx.req.body.confirmation).toString()
+      ctx.args.data.password = pass1
+      ctx.req.body.password = pass2
+      ctx.args.data.confirmation = conf1
+      ctx.req.body.confirmation = conf2
+    }
+    next()
+  })
 
   // Change Password Remote Method 
   client.changePassword = function (data, req, res, cb) {
@@ -43,8 +78,6 @@ module.exports = function (client) {
         })
       })
     })
-
-    cb(null, 'Password reset success')
   }
 
   client.remoteMethod('changePassword', {
