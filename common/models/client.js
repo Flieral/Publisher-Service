@@ -17,7 +17,6 @@ module.exports = function (client) {
 
   client.validatesLengthOf('password', {min: 6})
   client.validatesInclusionOf('registrationCountry', {in: ['US', 'IR']})
-  client.validatesUniquenessOf('companyName', {message: 'companyName is not unique'});  
 
   // Decrypt Password for Front/Back Communications
   client.beforeRemote('login', function (ctx, modelInstance, next) {
