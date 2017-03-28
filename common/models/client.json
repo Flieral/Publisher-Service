@@ -66,7 +66,8 @@
       "property": "accountModel",
       "options": {
         "validate": true,
-        "forceId": true
+        "forceId": true,
+        "persistent": true
       }
     },
     "publishers": {
@@ -75,7 +76,8 @@
       "property": "publisherList",
       "options": {
         "validate": true,
-        "forceId": true
+        "forceId": true,
+        "persistent": true
       }
     }
   },

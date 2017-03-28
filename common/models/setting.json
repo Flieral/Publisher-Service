@@ -1,6 +1,6 @@
 {
   "name": "setting",
-  "base": "PersistedModel",
+  "base": "Model",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -32,10 +32,6 @@
       ],
       "required": true
     },
-    "placementId": {
-      "type": "number",
-      "required": true
-    },
     "clientId": {
       "type": "number",
       "required": true
@@ -43,21 +39,10 @@
   },
   "validations": [],
   "relations": {
-    "placement": {
-      "type": "belongsTo",
-      "model": "placement",
-      "foreignKey": "id"
-    },
-    "client": {
-      "type": "belongsTo",
-      "model": "client",
-      "foreignKey": "id"
-    }
   },
   "acls": [],
   "hidden": [
-    "id",
-    "clientId"
+    "id"
   ],
   "methods": {}
 }

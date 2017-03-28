@@ -8,5 +8,5 @@ var relationMethodPrefixes = [
 ]
 
 module.exports = function (placement) {
-  methodDisabler.disableOnlyTheseMethods(placement, relationMethodPrefixes)
+  //methodDisabler.disableOnlyTheseMethods(placement, relationMethodPrefixes)
 }
