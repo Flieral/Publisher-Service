@@ -31,6 +31,14 @@
         "string"
       ],
       "required": true
+    },
+    "placementId": {
+      "type": "number",
+      "required": true
+    },
+    "clientId": {
+      "type": "number",
+      "required": true
     }
   },
   "validations": [],
@@ -38,9 +46,18 @@
     "placement": {
       "type": "belongsTo",
       "model": "placement",
-      "foreignKey": "settingID"
+      "foreignKey": "id"
+    },
+    "client": {
+      "type": "belongsTo",
+      "model": "client",
+      "foreignKey": "id"
     }
   },
   "acls": [],
+  "hidden": [
+    "id",
+    "clientId"
+  ],
   "methods": {}
 }

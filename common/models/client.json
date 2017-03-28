@@ -59,7 +59,32 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "account": {
+      "type": "hasOne",
+      "model": "account",
+      "foreignKey": "clientId",
+      "primaryKey": "id"
+    },
+     "publisher": {
+       "type": "hasMany",
+       "model": "publisher",
+      "foreignKey": "clientId",
+      "primaryKey": "id"
+    },
+     "placement": {
+       "type": "hasMany",
+       "model": "placement",
+      "foreignKey": "clientId",
+      "primaryKey": "id"
+    },
+    "setting": {
+       "type": "hasMany",
+       "model": "setting",
+      "foreignKey": "clientId",
+      "primaryKey": "id"
+    }
+  },
   "acls": [{
       "accessType": "*",
       "principalType": "ROLE",
@@ -77,6 +102,30 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "changePassword"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__account"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__account"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__update__account"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__destroy__account"
     }
   ],
   "hidden": [

@@ -13,16 +13,31 @@
     "type": {
       "type": "string",
       "required": true
+    },
+    "clientId": {
+      "type": "number",
+      "required": true
     }
   },
   "validations": [],
   "relations": {
-    "publishers": {
+    "client": {
+      "type": "belongsTo",
+      "model": "client",
+      "foreignKey": "id"
+    },
+    "publisher": {
       "type": "hasMany",
       "model": "publisher",
-      "foreignKey": "accountID"
+      "foreignKey": "accountId",
+      "primaryKey": "id"
     }
   },
-  "acls": [],
+  "acls": [
+  ],
+  "hidden": [
+    "id",
+    "clientId"
+  ],
   "methods": {}
 }

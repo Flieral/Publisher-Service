@@ -31,21 +31,39 @@
     },
     "message": {
       "type": "string"
+    },
+    "accountId": {
+      "type": "number",
+      "required": true
+    },
+    "clientId": {
+      "type": "number",
+      "required": true
     }
   },
   "validations": [],
   "relations": {
-    "placements": {
-      "type": "hasMany",
-      "model": "placement",
-      "foreignKey": "publisherID"
-    },
     "account": {
       "type": "belongsTo",
       "model": "account",
-      "foreignKey": "publisherID"
+      "foreignKey": "id"
+    },
+    "client": {
+      "type": "belongsTo",
+      "model": "client",
+      "foreignKey": "id"
+    },
+    "placement": {
+      "type": "hasMany",
+       "model": "placement",
+      "foreignKey": "publisherId",
+      "primaryKey": "id"
     }
   },
   "acls": [],
+  "hidden": [
+    "id",
+    "clientId"
+  ],
   "methods": {}
 }
