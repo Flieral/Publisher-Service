@@ -35,7 +35,7 @@
   },
   "account": {
     "dataSource": "redisDS",
-    "public": true
+    "public": false
   },
   "publisher": {
     "dataSource": "redisDS",

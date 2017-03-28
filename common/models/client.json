@@ -61,28 +61,13 @@
   "validations": [],
   "relations": {
     "account": {
-      "type": "hasOne",
+      "type": "embedsOne",
       "model": "account",
-      "foreignKey": "clientId",
-      "primaryKey": "id"
-    },
-     "publisher": {
-       "type": "hasMany",
-       "model": "publisher",
-      "foreignKey": "clientId",
-      "primaryKey": "id"
-    },
-     "placement": {
-       "type": "hasMany",
-       "model": "placement",
-      "foreignKey": "clientId",
-      "primaryKey": "id"
-    },
-    "setting": {
-       "type": "hasMany",
-       "model": "setting",
-      "foreignKey": "clientId",
-      "primaryKey": "id"
+      "property": "accountModel",
+      "options": {
+        "validate": true,
+        "forceId": false
+      }
     }
   },
   "acls": [{
