@@ -1,6 +1,6 @@
 {
   "name": "publisher",
-  "base": "PersistedModel",
+  "base": "Model",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -31,39 +31,16 @@
     },
     "message": {
       "type": "string"
-    },
-    "accountId": {
-      "type": "number",
-      "required": true
-    },
-    "clientId": {
-      "type": "number",
-      "required": true
     }
   },
   "validations": [],
   "relations": {
-    "account": {
-      "type": "belongsTo",
-      "model": "account",
-      "foreignKey": "id"
-    },
-    "client": {
-      "type": "belongsTo",
-      "model": "client",
-      "foreignKey": "id"
-    },
-    "placement": {
-      "type": "hasMany",
-       "model": "placement",
-      "foreignKey": "publisherId",
-      "primaryKey": "id"
-    }
   },
   "acls": [],
   "hidden": [
     "id",
-    "clientId"
+    "message",
+    "status"
   ],
   "methods": {}
 }

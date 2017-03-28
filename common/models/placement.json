@@ -39,22 +39,6 @@
   },
   "validations": [],
   "relations": {
-    "publisher": {
-      "type": "belongsTo",
-      "model": "publisher",
-      "foreignKey": "id"
-    },
-    "client": {
-      "type": "belongsTo",
-      "model": "client",
-      "foreignKey": "id"
-    },
-    "setting": {
-      "type": "hasMany",
-       "model": "setting",
-      "foreignKey": "placementId",
-      "primaryKey": "id"
-    }
   },
   "acls": [],
   "hidden": [

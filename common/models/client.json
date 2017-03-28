@@ -66,7 +66,16 @@
       "property": "accountModel",
       "options": {
         "validate": true,
-        "forceId": false
+        "forceId": true
+      }
+    },
+    "publishers": {
+      "type": "embedsMany",
+      "model": "publisher",
+      "property": "publisherList",
+      "options": {
+        "validate": true,
+        "forceId": true
       }
     }
   },
@@ -111,6 +120,30 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "__destroy__account"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__publishers"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__publishers"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__update__publishers"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__destroy__publishers"
     }
   ],
   "hidden": [

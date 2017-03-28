@@ -113,7 +113,7 @@ module.exports = function (client) {
   })
 
   //send verification email after registration
-  client.afterRemote('create', function (context, userInstance, next) {
+  client.afterRemote('create', function (context, userInstance, next1) {
     var options = {
       type: 'email',
       to: userInstance.email,
@@ -123,7 +123,7 @@ module.exports = function (client) {
     }
 
     userInstance.verify(options, function (err, response, next) {
-      if (err) return next(err)
+      if (err) return next1(err)
 
       console.log('> verification email sent:', response)
 
