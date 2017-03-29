@@ -9,6 +9,7 @@ var relationMethodPrefixes = [
   'createChangeStream',
   'upsertWithWhere',
   'patchOrCreate',
+  'exists'
 ]
 
 module.exports = function (client) {
