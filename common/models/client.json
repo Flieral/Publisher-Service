@@ -166,7 +166,9 @@
     "message",
     "webhookURL",
     "emailVerified",
-    "registrationStatus"
+    "registrationStatus",
+    "accountModel",
+    "publisherList"
   ],
   "methods": {}
 }

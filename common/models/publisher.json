@@ -112,7 +112,8 @@
   "hidden": [
     "id",
     "message",
-    "status"
+    "status",
+    "placementList"
   ],
   "methods": {}
 }

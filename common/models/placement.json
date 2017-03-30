@@ -100,7 +100,8 @@
   "hidden": [
     "id",
     "status",
-    "message"
+    "message",
+    "settingModel"
   ],
   "methods": {}
 }
