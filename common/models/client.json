@@ -41,21 +41,6 @@
       "type": "string",
       "required": true,
       "index": true
-    },
-    "registrationStatus": {
-      "type": "string",
-      "required": false,
-      "index": false
-    },
-    "webhookURL": {
-      "type": "string",
-      "required": false,
-      "index": false
-    },
-    "message": {
-      "type": "string",
-      "required": false,
-      "index": false
     }
   },
   "validations": [],
@@ -108,7 +93,7 @@
     {
       "principalType": "ROLE",
       "principalId": "$owner",
-      "permission": "ALLOW",
+      "permission": "DENY",
       "property": "__create__account"
     },
     {

@@ -27,7 +27,7 @@
     },
     "mediationStyle": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "message": {
       "type": "string"
@@ -110,7 +110,8 @@
     "message",
     "status",
     "placementList",
-    "clientId"
+    "clientId",
+    "mediationStyle"
   ],
   "methods": {}
 }
