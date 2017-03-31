@@ -11,7 +11,7 @@ module.exports = function (placement) {
     next()
   })
 
-  placement.beforeRemote('prototype.__updateById__update', function (ctx, modelInstance, next) {
+  placement.beforeRemote('prototype.__updateById__setting', function (ctx, modelInstance, next) {
     if (!ctx.args.options.accessToken)
       return next()
     ctx.args.data.clientId = ctx.args.options.accessToken.userId

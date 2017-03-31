@@ -123,7 +123,7 @@
     {
       "principalType": "ROLE",
       "principalId": "$owner",
-      "permission": "ALLOW",
+      "permission": "DENY",
       "property": "__updateById__publishers"
     },
     {
