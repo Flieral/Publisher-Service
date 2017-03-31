@@ -54,6 +54,20 @@ module.exports = function (client) {
     next()
   })
 
+  client.beforeRemote('prototype.__create__publishers', function (ctx, modelInstance, next) {
+    if (!ctx.args.options.accessToken)
+      return next()
+    ctx.args.data.clientId = ctx.args.options.accessToken.userId
+    next()
+  })
+
+  client.beforeRemote('prototype.__updateById__publishers', function (ctx, modelInstance, next) {
+    if (!ctx.args.options.accessToken)
+      return next()
+    ctx.args.data.clientId = ctx.args.options.accessToken.userId
+    next()
+  })
+
   // Change Password Remote Method 
   client.changePassword = function (data, req, res, cb) {
     if (!req.accessToken)

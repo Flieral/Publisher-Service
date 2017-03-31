@@ -1,12 +1,15 @@
-var methodDisabler = require('../../public/methodDisabler.js')
-var relationMethodPrefixes = [
-  'createChangeStream',
-  'upsertWithWhere',
-  'patchOrCreate',
-  'exists',
-  'prototype.patchAttributes'
-]
-
 module.exports = function (placement) {
-  //methodDisabler.disableOnlyTheseMethods(placement, relationMethodPrefixes)
+  placement.beforeRemote('prototype.__create__setting', function (ctx, modelInstance, next) {
+    if (!ctx.args.options.accessToken)
+      return next()
+    ctx.args.data.clientId = ctx.args.options.accessToken.userId
+    next()
+  })
+
+  placement.beforeRemote('prototype.__updateById__update', function (ctx, modelInstance, next) {
+    if (!ctx.args.options.accessToken)
+      return next()
+    ctx.args.data.clientId = ctx.args.options.accessToken.userId
+    next()
+  })
 }

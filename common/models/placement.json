@@ -31,10 +31,6 @@
     },
     "message": {
       "type": "string"
-    },
-    "clientId": {
-      "type": "number",
-      "required": true
     }
   },
   "validations": [],
@@ -101,7 +97,8 @@
     "id",
     "status",
     "message",
-    "settingModel"
+    "settingModel",
+    "clientId"
   ],
   "methods": {}
 }
