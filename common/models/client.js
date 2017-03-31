@@ -68,6 +68,14 @@ module.exports = function (client) {
     next()
   })
 
+  client.beforeRemote('replaceById', function (ctx, modelInstance, next) {
+    var whilteList = ['companyName']
+    if (utility.inputChecker(ctx.args.data, whilteList))
+      next()
+    else
+      next(new Error('White List Error! Allowed Parameters: ' + whilteList.toString()))
+  })
+
   // Change Password Remote Method 
   client.changePassword = function (data, req, res, cb) {
     if (!req.accessToken)

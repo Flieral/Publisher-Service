@@ -114,7 +114,7 @@
     {
       "principalType": "ROLE",
       "principalId": "$owner",
-      "permission": "ALLOW",
+      "permission": "DENY",
       "property": "__update__account"
     },
     {
