@@ -1,12 +1,5 @@
-var methodDisabler = require('../../public/methodDisabler.js')
-var relationMethodPrefixes = [
-  'createChangeStream',
-  'upsertWithWhere',
-  'patchOrCreate',
-  'exists',
-  'prototype.patchAttributes'
-]
+var accountType = require('../../config/accountType.json')
 
 module.exports = function (account) {
-  //methodDisabler.disableOnlyTheseMethods(account, relationMethodPrefixes)
+  account.validatesInclusionOf('type', {in: accountType})
 }

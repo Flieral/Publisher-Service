@@ -41,21 +41,6 @@
       "type": "string",
       "required": true,
       "index": true
-    },
-    "registrationStatus": {
-      "type": "string",
-      "required": false,
-      "index": false
-    },
-    "webhookURL": {
-      "type": "string",
-      "required": false,
-      "index": false
-    },
-    "message": {
-      "type": "string",
-      "required": false,
-      "index": false
     }
   },
   "validations": [],
@@ -108,13 +93,13 @@
     {
       "principalType": "ROLE",
       "principalId": "$owner",
-      "permission": "ALLOW",
+      "permission": "DENY",
       "property": "__create__account"
     },
     {
       "principalType": "ROLE",
       "principalId": "$owner",
-      "permission": "ALLOW",
+      "permission": "DENY",
       "property": "__update__account"
     },
     {
@@ -138,14 +123,26 @@
     {
       "principalType": "ROLE",
       "principalId": "$owner",
-      "permission": "ALLOW",
-      "property": "__update__publishers"
+      "permission": "DENY",
+      "property": "__updateById__publishers"
     },
     {
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
-      "property": "__destroy__publishers"
+      "property": "__destroyById__publishers"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__findById__publishers"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__count__publishers"
     }
   ],
   "hidden": [
@@ -154,7 +151,9 @@
     "message",
     "webhookURL",
     "emailVerified",
-    "registrationStatus"
+    "registrationStatus",
+    "accountModel",
+    "publisherList"
   ],
   "methods": {}
 }

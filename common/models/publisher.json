@@ -27,14 +27,10 @@
     },
     "mediationStyle": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "message": {
       "type": "string"
-    },
-    "clientId": {
-      "type": "number",
-      "required": true
     }
   },
   "validations": [],
@@ -88,19 +84,34 @@
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
-      "property": "__update__placements"
+      "property": "__updateById__placements"
     },
     {
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
-      "property": "__destroy__placements"
+      "property": "__destroyById__placements"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__findById__placements"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__count__placements"
     }
   ],
   "hidden": [
     "id",
     "message",
-    "status"
+    "status",
+    "placementList",
+    "clientId",
+    "mediationStyle"
   ],
   "methods": {}
 }

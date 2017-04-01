@@ -9,14 +9,17 @@ var relationMethodPrefixes = [
   'createChangeStream',
   'upsertWithWhere',
   'patchOrCreate',
+  'exists'
 ]
+
+var countryList = require('../../config/country.json')
 
 module.exports = function (client) {
 
   methodDisabler.disableOnlyTheseMethods(client, relationMethodPrefixes)
 
   client.validatesLengthOf('password', {min: 6})
-  client.validatesInclusionOf('registrationCountry', {in: ['US', 'IR']})
+  client.validatesInclusionOf('registrationCountry', {in: countryList})
 
   // Decrypt Password for Front/Back Communications
   client.beforeRemote('login', function (ctx, modelInstance, next) {
@@ -36,6 +39,9 @@ module.exports = function (client) {
       ctx.args.data.password = pass1
       ctx.req.body.password = pass2
     }
+    ctx.args.data.accountModel = {}
+    ctx.args.data.accountModel.credit = 0
+    ctx.args.data.accountModel.type = 'Free'
     next()
   })
 
@@ -51,6 +57,29 @@ module.exports = function (client) {
       ctx.req.body.confirmation = conf2
     }
     next()
+  })
+
+  client.beforeRemote('prototype.__create__publishers', function (ctx, modelInstance, next) {
+    if (!ctx.args.options.accessToken)
+      return next()
+    ctx.args.data.credit = 0
+    ctx.args.data.clientId = ctx.args.options.accessToken.userId
+    next()    
+  })
+
+  client.beforeRemote('prototype.__updateById__publishers', function (ctx, modelInstance, next) {
+      if (!ctx.args.options.accessToken)
+        return next()
+      ctx.args.data.clientId = ctx.args.options.accessToken.userId
+      next()
+  })
+
+  client.beforeRemote('replaceById', function (ctx, modelInstance, next) {
+    var whilteList = ['companyName']
+    if (utility.inputChecker(ctx.args.data, whilteList))
+      next()
+    else
+      next(new Error('White List Error! Allowed Parameters: ' + whilteList.toString()))
   })
 
   // Change Password Remote Method 

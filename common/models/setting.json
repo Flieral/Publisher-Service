@@ -31,10 +31,6 @@
         "string"
       ],
       "required": true
-    },
-    "clientId": {
-      "type": "number",
-      "required": true
     }
   },
   "validations": [],
@@ -42,7 +38,8 @@
   },
   "acls": [],
   "hidden": [
-    "id"
+    "id",
+    "clientId"
   ],
   "methods": {}
 }
