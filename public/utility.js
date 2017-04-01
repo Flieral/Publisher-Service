@@ -29,7 +29,7 @@ module.exports = {
       return false
 
     for (var i = 0; i < input.length; i++)
-      if (whiteList.indexOf(whiteList[i]) <= -1)
+      if (whiteList.indexOf(input[i]) <= -1)
         return false
     
     return true
