@@ -1,6 +1,6 @@
 {
   "name": "publisher",
-  "base": "PersistedModel",
+  "base": "Model",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -27,43 +27,91 @@
     },
     "mediationStyle": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "message": {
       "type": "string"
-    },
-    "accountId": {
-      "type": "number",
-      "required": true
-    },
-    "clientId": {
-      "type": "number",
-      "required": true
     }
   },
   "validations": [],
   "relations": {
-    "account": {
-      "type": "belongsTo",
-      "model": "account",
-      "foreignKey": "id"
-    },
     "client": {
       "type": "belongsTo",
       "model": "client",
-      "foreignKey": "id"
+      "foreignKey": "clientId"
     },
-    "placement": {
-      "type": "hasMany",
-       "model": "placement",
-      "foreignKey": "publisherId",
-      "primaryKey": "id"
+    "placements": {
+      "type": "embedsMany",
+      "model": "placement",
+      "property": "placementList",
+      "options": {
+        "validate": true,
+        "forceId": true,
+        "persistent": true
+      }
     }
   },
-  "acls": [],
+  "acls": [{
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "founder",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__placements"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__placements"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__updateById__placements"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__destroyById__placements"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__findById__placements"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__count__placements"
+    }
+  ],
   "hidden": [
     "id",
-    "clientId"
+    "message",
+    "status",
+    "placementList",
+    "clientId",
+    "mediationStyle"
   ],
   "methods": {}
 }

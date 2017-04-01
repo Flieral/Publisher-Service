@@ -41,48 +41,29 @@
       "type": "string",
       "required": true,
       "index": true
-    },
-    "registrationStatus": {
-      "type": "string",
-      "required": false,
-      "index": false
-    },
-    "webhookURL": {
-      "type": "string",
-      "required": false,
-      "index": false
-    },
-    "message": {
-      "type": "string",
-      "required": false,
-      "index": false
     }
   },
   "validations": [],
   "relations": {
     "account": {
-      "type": "hasOne",
+      "type": "embedsOne",
       "model": "account",
-      "foreignKey": "clientId",
-      "primaryKey": "id"
+      "property": "accountModel",
+      "options": {
+        "validate": true,
+        "forceId": true,
+        "persistent": true
+      }
     },
-     "publisher": {
-       "type": "hasMany",
-       "model": "publisher",
-      "foreignKey": "clientId",
-      "primaryKey": "id"
-    },
-     "placement": {
-       "type": "hasMany",
-       "model": "placement",
-      "foreignKey": "clientId",
-      "primaryKey": "id"
-    },
-    "setting": {
-       "type": "hasMany",
-       "model": "setting",
-      "foreignKey": "clientId",
-      "primaryKey": "id"
+    "publishers": {
+      "type": "embedsMany",
+      "model": "publisher",
+      "property": "publisherList",
+      "options": {
+        "validate": true,
+        "forceId": true,
+        "persistent": true
+      }
     }
   },
   "acls": [{
@@ -112,13 +93,13 @@
     {
       "principalType": "ROLE",
       "principalId": "$owner",
-      "permission": "ALLOW",
+      "permission": "DENY",
       "property": "__create__account"
     },
     {
       "principalType": "ROLE",
       "principalId": "$owner",
-      "permission": "ALLOW",
+      "permission": "DENY",
       "property": "__update__account"
     },
     {
@@ -126,6 +107,42 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "__destroy__account"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__get__publishers"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__publishers"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "DENY",
+      "property": "__updateById__publishers"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__destroyById__publishers"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__findById__publishers"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__count__publishers"
     }
   ],
   "hidden": [
@@ -134,7 +151,9 @@
     "message",
     "webhookURL",
     "emailVerified",
-    "registrationStatus"
+    "registrationStatus",
+    "accountModel",
+    "publisherList"
   ],
   "methods": {}
 }

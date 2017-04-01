@@ -21,5 +21,17 @@ module.exports = {
 
   stringReplace: function (source, find, replace) {
     return source.replace(find, replace)
+  },
+
+  inputChecker: function (reqInput, whiteList) {
+    var input = Object.keys(reqInput)
+    if (input.length != whiteList.length)
+      return false
+
+    for (var i = 0; i < input.length; i++)
+      if (whiteList.indexOf(input[i]) <= -1)
+        return false
+    
+    return true
   }
 }
