@@ -48,7 +48,7 @@
     "account": {
       "type": "embedsOne",
       "model": "account",
-      "property": "accountModel",
+      "property": "publisherAccountModel",
       "options": {
         "validate": true,
         "forceId": true,
