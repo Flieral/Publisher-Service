@@ -152,7 +152,8 @@
     "webhookURL",
     "emailVerified",
     "registrationStatus",
-    "accountModel",
+    "announcerAccountModel",
+    "publisherAccountModel",
     "publisherList"
   ],
   "methods": {}
