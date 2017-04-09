@@ -17,17 +17,9 @@
       "type": "string",
       "required": true
     },
-    "URL": {
-      "type": "string",
-      "required": true
-    },
     "operatingSystem": {
       "type": "string",
       "required": true
-    },
-    "mediationStyle": {
-      "type": "string",
-      "required": false
     },
     "message": {
       "type": "string"

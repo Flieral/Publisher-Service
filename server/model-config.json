@@ -33,7 +33,7 @@
     "dataSource": "db",
     "public": false
   },
-  "account": {
+  "publisherAccount": {
     "dataSource": "redisDS",
     "public": true
   },

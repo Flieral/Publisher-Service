@@ -1,5 +1,5 @@
 {
-  "name": "account",
+  "name": "publisherAccount",
   "base": "Model",
   "idInjection": true,
   "options": {

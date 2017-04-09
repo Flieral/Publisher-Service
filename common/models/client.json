@@ -45,9 +45,9 @@
   },
   "validations": [],
   "relations": {
-    "account": {
+    "publisherAccount": {
       "type": "embedsOne",
-      "model": "account",
+      "model": "publisherAccount",
       "property": "publisherAccountModel",
       "options": {
         "validate": true,
@@ -88,25 +88,25 @@
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
-      "property": "__get__account"
+      "property": "__get__publisherAccount"
     },
     {
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "DENY",
-      "property": "__create__account"
+      "property": "__create__publisherAccount"
     },
     {
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "DENY",
-      "property": "__update__account"
+      "property": "__update__publisherAccount"
     },
     {
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
-      "property": "__destroy__account"
+      "property": "__destroy__publisherAccount"
     },
     {
       "principalType": "ROLE",
@@ -146,12 +146,8 @@
     }
   ],
   "hidden": [
-    "id",
     "realm",
-    "message",
-    "webhookURL",
     "emailVerified",
-    "registrationStatus",
     "announcerAccountModel",
     "publisherAccountModel",
     "publisherList"
