@@ -58,7 +58,7 @@
     "applications": {
       "type": "embedsMany",
       "model": "application",
-      "property": "appliactionList",
+      "property": "applicationList",
       "options": {
         "validate": true,
         "forceId": true,

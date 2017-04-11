@@ -10,7 +10,8 @@ var relationMethodPrefixes = [
   'createChangeStream',
   'upsertWithWhere',
   'patchOrCreate',
-  'exists'
+  'exists',
+  'prototype.patchAttributes'
 ]
 
 var countryList = require('../../config/country.json')

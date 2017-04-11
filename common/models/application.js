@@ -1,6 +1,7 @@
 var osList = require('../../config/operatingSystem.json')
 var statusConfig = require('../../config/status.json')
 var app = require('../../server/server')
+var utility = require('../../public/utility.js')
 
 module.exports = function (application) {
   

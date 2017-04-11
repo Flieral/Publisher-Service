@@ -11,11 +11,11 @@
       "required": true
     },
     "beginningTime": {
-      "type": "string",
+      "type": "number",
       "required": true
     },
     "endingTime": {
-      "type": "string",
+      "type": "number",
       "required": true
     },
     "name": {
