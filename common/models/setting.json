@@ -38,8 +38,6 @@
   },
   "acls": [],
   "hidden": [
-    "id",
-    "clientId"
   ],
   "methods": {}
 }
