@@ -98,12 +98,7 @@
     }
   ],
   "hidden": [
-    "id",
-    "message",
-    "status",
-    "placementList",
-    "clientId",
-    "mediationStyle"
+    "placementList"
   ],
   "methods": {}
 }

@@ -27,7 +27,8 @@
       "required": true
     },
     "status": {
-      "type": "string"
+      "type": "string",
+      "required": false
     },
     "message": {
       "type": "string"
@@ -94,11 +95,7 @@
     }
   ],
   "hidden": [
-    "id",
-    "status",
-    "message",
-    "settingModel",
-    "clientId"
+    "settingModel"
   ],
   "methods": {}
 }
