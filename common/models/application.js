@@ -14,7 +14,7 @@ module.exports = function (application) {
   application.beforeRemote('prototype.__create__placements', function (ctx, modelInstance, next) {
     if (!ctx.args.options.accessToken)
       return next()
-    var whiteList = ['beginninTime', 'endingTime', 'name', 'style', 'status']
+    var whiteList = ['beginningTime', 'endingTime', 'name', 'style', 'status']
     if (utility.inputChecker(ctx.args.data, whiteList)) {
       application.findById(ctx.req.params.id, function (err, result) {
         if (err)
@@ -33,13 +33,13 @@ module.exports = function (application) {
           else {
             if (ctx.args.data.status === statusConfig.disable)
               ctx.args.data.message = 'Placement is Disabled'
-            else if (ctx.args.data.status === statusConfig.enabled)
+            else if (ctx.args.data.status === statusConfig.enable)
               ctx.args.data.message = 'Placement is Enabled'
           }
         }
         if (ctx.args.data.beginningTime < utility.getUnixTimeStamp())
           return next(new Error('Beginning Time Can not be Less than Now'))
-        if (ctx.args.data.endingTime > ctx.args.data.beginningTime < 86400000)
+        if (ctx.args.data.endingTime - ctx.args.data.beginningTime < 86400000)
           return next(new Error('Duration Problem'))
         return next()
       })
@@ -50,7 +50,7 @@ module.exports = function (application) {
   application.beforeRemote('prototype.__updateById__placements', function (ctx, modelInstance, next) {
     if (!ctx.args.options.accessToken)
       return next()
-    var whiteList = ['beginninTime', 'endingTime', 'name', 'style', 'status']
+    var whiteList = ['beginningTime', 'endingTime', 'name', 'style', 'status']
     if (utility.inputChecker(ctx.args.data, whiteList)) {
       var placement = app.models.placement
       placement.findById(ctx.req.params.fk, function (err, response) {
