@@ -5,5 +5,5 @@ module.exports = function (publisherAccount) {
   for (var key in accountType) 
     accountTypeList.push(accountType[key])
   
-  announcerAccount.validatesInclusionOf('type', {in: accountTypeList})
+  publisherAccount.validatesInclusionOf('type', {in: accountTypeList})
 }
