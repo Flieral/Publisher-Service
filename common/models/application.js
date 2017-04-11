@@ -2,20 +2,20 @@ var osList = require('../../config/operatingSystem.json')
 var statusConfig = require('../../config/status.json')
 var app = require('../../server/server')
 
-module.exports = function (publisher) {
+module.exports = function (application) {
   
-  publisher.validatesInclusionOf('operatingSystem', { in: osList })
+  application.validatesInclusionOf('operatingSystem', { in: osList })
   var statusList = []
   for (var key in statusConfig)
     statusList.push(statusConfig[key])
-  publisher.validatesInclusionOf('status', { in: statusList })
+  application.validatesInclusionOf('status', { in: statusList })
 
-  publisher.beforeRemote('prototype.__create__placements', function (ctx, modelInstance, next) {
+  application.beforeRemote('prototype.__create__placements', function (ctx, modelInstance, next) {
     if (!ctx.args.options.accessToken)
       return next()
     var whiteList = ['beginninTime', 'endingTime', 'name', 'style', 'status']
     if (utility.inputChecker(ctx.args.data, whiteList)) {
-      publisher.findById(ctx.req.params.id, function (err, result) {
+      application.findById(ctx.req.params.id, function (err, result) {
         if (err)
           throw err
         ctx.args.data.clientId = ctx.args.options.accessToken.userId
@@ -46,7 +46,7 @@ module.exports = function (publisher) {
         return next(new Error('White List Error! Allowed Parameters: ' + whiteList.toString()))
   })
 
-  publisher.beforeRemote('prototype.__updateById__placements', function (ctx, modelInstance, next) {
+  application.beforeRemote('prototype.__updateById__placements', function (ctx, modelInstance, next) {
     if (!ctx.args.options.accessToken)
       return next()
     var whiteList = ['beginninTime', 'endingTime', 'name', 'style', 'status']

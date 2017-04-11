@@ -81,7 +81,7 @@ module.exports = function (client) {
     })
   })
 
-  client.beforeRemote('prototype.__create__publishers', function (ctx, modelInstance, next) {
+  client.beforeRemote('prototype.__create__applications', function (ctx, modelInstance, next) {
     if (!ctx.args.options.accessToken)
       return next()
     var whiteList = ['name', 'operatingSystem']
@@ -96,7 +96,7 @@ module.exports = function (client) {
     }
   })
 
-  client.beforeRemote('prototype.__updateById__publishers', function (ctx, modelInstance, next) {
+  client.beforeRemote('prototype.__updateById__applications', function (ctx, modelInstance, next) {
     if (!ctx.args.options.accessToken)
       return next()
     var whiteList = ['name', 'status']
@@ -112,8 +112,8 @@ module.exports = function (client) {
         else if (ctx.args.data.status === statusJson.disable) {
           ctx.args.data.status = statusJson.disable
           ctx.args.data.message = 'Application is Disabed'
-          var publisher = app.models.publisher
-          publisher.findById(ctx.req.params.fk, function (err, result) {
+          var application = app.models.application
+          application.findById(ctx.req.params.fk, function (err, result) {
             if (err)
               return next(err)
             for (var i = 0; i < result.placementList.length; i++) {

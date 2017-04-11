@@ -55,10 +55,10 @@
         "persistent": true
       }
     },
-    "publishers": {
+    "applications": {
       "type": "embedsMany",
-      "model": "publisher",
-      "property": "publisherList",
+      "model": "application",
+      "property": "appliactionList",
       "options": {
         "validate": true,
         "forceId": true,
@@ -118,37 +118,37 @@
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
-      "property": "__get__publishers"
+      "property": "__get__applications"
     },
     {
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
-      "property": "__create__publishers"
+      "property": "__create__applications"
     },
     {
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "DENY",
-      "property": "__updateById__publishers"
+      "property": "__updateById__applications"
     },
     {
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
-      "property": "__destroyById__publishers"
+      "property": "__destroyById__applications"
     },
     {
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
-      "property": "__findById__publishers"
+      "property": "__findById__applications"
     },
     {
       "principalType": "ROLE",
       "principalId": "$owner",
       "permission": "ALLOW",
-      "property": "__count__publishers"
+      "property": "__count__applications"
     }
   ],
   "hidden": [
@@ -156,7 +156,7 @@
     "emailVerified",
     "announcerAccountModel",
     "publisherAccountModel",
-    "publisherList"
+    "applicationList"
   ],
   "methods": {}
 }

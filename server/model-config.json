@@ -37,7 +37,7 @@
     "dataSource": "redisDS",
     "public": true
   },
-  "publisher": {
+  "application": {
     "dataSource": "redisDS",
     "public": true
   },
