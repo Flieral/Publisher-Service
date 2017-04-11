@@ -1,6 +1,7 @@
 var config = require('../../server/config.json')
 var path = require('path')
 var utility = require('../../public/utility.js')
+var app = require('../../server/server')
 
 var PRODUCTION = false
 
@@ -13,6 +14,8 @@ var relationMethodPrefixes = [
 ]
 
 var countryList = require('../../config/country.json')
+var statusJson = require('../../config/status.json')
+var accountType = require('../../config/accountType.json')
 
 module.exports = function (client) {
 
@@ -29,7 +32,7 @@ module.exports = function (client) {
       ctx.args.credentials.password = pass1
       ctx.req.body.password = pass2
     }
-    next()
+    return next()
   })
 
   client.beforeRemote('create', function (ctx, modelInstance, next) {
@@ -39,13 +42,18 @@ module.exports = function (client) {
       ctx.args.data.password = pass1
       ctx.req.body.password = pass2
     }
-    ctx.args.data.announcerAccountModel = {}
-    ctx.args.data.announcerAccountModel.credit = 0
-    ctx.args.data.announcerAccountModel.type = 'Free'
-    ctx.args.data.publisherAccountModel = {}
-    ctx.args.data.publisherAccountModel.budget = 0
-    ctx.args.data.publisherAccountModel.type = 'Free'
-    next()
+    var whiteList = ['companyName', 'email', 'username', 'password', 'time', 'registrationCountry', 'registrationIPAddress']
+    if (!utility.inputChecker(ctx.args.data, whiteList))
+      return next(new Error('White List Error! Allowed Parameters: ' + whiteList.toString()))
+    else {
+      ctx.args.data.announcerAccountModel = {}
+      ctx.args.data.announcerAccountModel.budget = 0
+      ctx.args.data.announcerAccountModel.type = accountType.free
+      ctx.args.data.publisherAccountModel = {}
+      ctx.args.data.publisherAccountModel.credit = 0
+      ctx.args.data.publisherAccountModel.type = accountType.free
+      return next()
+    }
   })
 
   client.beforeRemote('changePassword', function (ctx, modelInstance, next) {
@@ -62,19 +70,67 @@ module.exports = function (client) {
     next()
   })
 
+  client.beforeRemote('prototype.__update__publisherAccount', function (ctx, modelInstance, next) {
+    if (!ctx.args.options.accessToken)
+      return next()
+    client.findById(ctx.req.params.id, function (err, result) {
+      if (err)
+        throw err
+      // Fix Chain
+      return next()
+    })
+  })
+
   client.beforeRemote('prototype.__create__publishers', function (ctx, modelInstance, next) {
     if (!ctx.args.options.accessToken)
       return next()
-    ctx.args.data.credit = 0
-    ctx.args.data.clientId = ctx.args.options.accessToken.userId
-    next()    
+    var whiteList = ['name', 'operatingSystem']
+    if (!utility.inputChecker(ctx.args.data, whiteList))
+      return next(new Error('White List Error! Allowed Parameters: ' + whiteList.toString()))
+    else {
+      ctx.args.data.credit = 0
+      ctx.args.data.clientId = ctx.args.options.accessToken.userId
+      ctx.args.data.status = statusJson.enable
+      ctx.args.data.message = 'Application is Enabled'
+      return next()
+    }
   })
 
   client.beforeRemote('prototype.__updateById__publishers', function (ctx, modelInstance, next) {
-      if (!ctx.args.options.accessToken)
-        return next()
-      ctx.args.data.clientId = ctx.args.options.accessToken.userId
-      next()
+    if (!ctx.args.options.accessToken)
+      return next()
+    var whiteList = ['name', 'status']
+    if (!utility.inputChecker(ctx.args.data, whiteList))
+      return next(new Error('White List Error! Allowed Parameters: ' + whiteList.toString()))
+    else {
+      if (ctx.args.data.status) {
+        if (ctx.args.data.status === statusJson.enable) {
+          ctx.args.data.status = statusJson.enable
+          ctx.args.data.message = 'Application is Enabled'
+          return next()
+        }
+        else if (ctx.args.data.status === statusJson.disable) {
+          ctx.args.data.status = statusJson.disable
+          ctx.args.data.message = 'Application is Disabed'
+          var publisher = app.models.publisher
+          publisher.findById(ctx.req.params.fk, function (err, result) {
+            if (err)
+              return next(err)
+            for (var i = 0; i < result.placementList.length; i++) {
+              var counter = 0
+              var model = result.placementList[i]  
+              model.updateAttribute('status', statusConfig.disable, function (err, response) {
+                if (err)
+                  throw err
+                counter++
+                if (counter == result.placementList.length)
+                return next()
+              })
+            }
+          })
+        }
+      }
+    }
   })
 
   client.beforeRemote('replaceById', function (ctx, modelInstance, next) {
