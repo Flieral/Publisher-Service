@@ -56,14 +56,9 @@
       }
     },
     "applications": {
-      "type": "embedsMany",
+      "type": "hasMany",
       "model": "application",
-      "property": "applicationList",
-      "options": {
-        "validate": true,
-        "forceId": true,
-        "persistent": true
-      }
+      "foreignKey": "clientId"
     }
   },
   "acls": [{
@@ -129,7 +124,7 @@
     {
       "principalType": "ROLE",
       "principalId": "$owner",
-      "permission": "DENY",
+      "permission": "ALLOW",
       "property": "__updateById__applications"
     },
     {
@@ -156,7 +151,8 @@
     "emailVerified",
     "announcerAccountModel",
     "publisherAccountModel",
-    "applicationList"
+    "applicationList",
+    "campaignList"
   ],
   "methods": {}
 }

@@ -34,26 +34,26 @@
     "public": false
   },
   "publisherAccount": {
-    "dataSource": "redisDS",
+    "dataSource": "mongoDs",
     "public": true
   },
   "application": {
-    "dataSource": "redisDS",
+    "dataSource": "mongoDs",
     "public": true
   },
   "placement": {
-    "dataSource": "redisDS",
+    "dataSource": "mongoDs",
     "public": true
   },
   "setting": {
-    "dataSource": "redisDS",
+    "dataSource": "mongoDs",
     "public": true
   },
   "Email": {
     "dataSource": "emailDS"
   },
   "client": {
-    "dataSource": "redisDS",
+    "dataSource": "mongoDs",
     "public": true,
     "options": {
       "emailVerificationRequired": true

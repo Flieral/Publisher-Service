@@ -2,6 +2,7 @@ var config = require('../../server/config.json')
 var path = require('path')
 var utility = require('../../public/utility.js')
 var app = require('../../server/server')
+var roleManager = require('../../public/roleManager')
 
 var PRODUCTION = false
 
@@ -36,6 +37,33 @@ module.exports = function (client) {
     return next()
   })
 
+  client.afterRemote('login', function (ctx, modelInstance, next) {
+    roleManager.getRolesById(app, modelInstance.userId, function (err, result) {
+      if (err)
+        return next(err)
+      if (result.roles.length == 0) {
+        client.findById(modelInstance.userId, function (err, result) {
+          if (err)
+            throw err
+          if (result.clientType.indexOf('Publisher') <= -1) {
+            var oldSet = []
+            oldSet = result.clientType
+            oldSet.push('Publisher')
+            result.updateAttribute('clientType', oldSet, function (err, response) {
+              if (err)
+                throw err
+              return next()
+            })        
+          }
+          else        
+            return next()
+        })
+      }
+      else 
+        return next()
+    })
+  })
+
   client.beforeRemote('create', function (ctx, modelInstance, next) {
     if (PRODUCTION) {
       var pass1 = utility.base64Decoding(ctx.args.data.password).toString()
@@ -53,6 +81,7 @@ module.exports = function (client) {
       ctx.args.data.publisherAccountModel = {}
       ctx.args.data.publisherAccountModel.credit = 0
       ctx.args.data.publisherAccountModel.type = accountType.free
+      ctx.args.data.clientType = []
       return next()
     }
   })
@@ -113,25 +142,41 @@ module.exports = function (client) {
         else if (ctx.args.data.status === statusJson.disable) {
           ctx.args.data.status = statusJson.disable
           ctx.args.data.message = 'Application is Disabed'
-          var application = app.models.application
-          application.findById(ctx.req.params.fk, function (err, result) {
-            if (err)
-              return next(err)
-            for (var i = 0; i < result.placementList.length; i++) {
-              var counter = 0
-              var model = result.placementList[i]  
-              model.updateAttribute('status', statusConfig.disable, function (err, response) {
-                if (err)
-                  throw err
-                counter++
-                if (counter == result.placementList.length)
-                return next()
-              })
-            }
-          })
+          return next()
         }
       }
     }
+  })
+  
+  client.afterRemote('prototype.__updateById__applications', function (ctx, modelInstance, next) {
+    if (ctx.args.data.status) {
+      if (ctx.args.data.status === statusJson.disable) {
+        var placement = app.models.placement
+        placement.find({ where: { 'applicationId': ctx.req.params.fk } }, function (err, placementList) {
+          if (err)
+            throw err
+          var fire = 1
+          var callbackFired = false
+          for (var i = 0; i < placementList.length; i++) {
+            callbackFired = true
+            var appPlacement = placementList[i]
+            appPlacement.updateAttribute('status', statusJson.disable, function (err, response) {
+              if (err)
+                throw err
+              fire++
+              if (fire == placementList.length)
+                return next()  
+            })
+          }
+          if (callbackFired == false)
+            next()  
+        })
+      }
+      else
+        next()  
+    }
+    else 
+      next()  
   })
 
   client.beforeRemote('replaceById', function (ctx, modelInstance, next) {
