@@ -142,6 +142,7 @@ module.exports = function (client) {
         else if (ctx.args.data.status === statusJson.disable) {
           ctx.args.data.status = statusJson.disable
           ctx.args.data.message = 'Application is Disabed'
+          return next()
         }
       }
     }
@@ -154,19 +155,28 @@ module.exports = function (client) {
         placement.find({ where: { 'applicationId': ctx.req.params.fk } }, function (err, placementList) {
           if (err)
             throw err
-          var fire = 0
+          var fire = 1
+          var callbackFired = false
           for (var i = 0; i < placementList.length; i++) {
-            fire++
-            placementList[i].updateAttribute('status', statusJson.disable, function (err, response) {
+            callbackFired = true
+            var appPlacement = placementList[i]
+            appPlacement.updateAttribute('status', statusJson.disable, function (err, response) {
               if (err)
-                throw err  
+                throw err
+              fire++
               if (fire == placementList.length)
                 return next()  
             })
           }
+          if (callbackFired == false)
+            next()  
         })
       }
+      else
+        next()  
     }
+    else 
+      next()  
   })
 
   client.beforeRemote('replaceById', function (ctx, modelInstance, next) {
