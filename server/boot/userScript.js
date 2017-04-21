@@ -1,16 +1,11 @@
-var methodDisabler = require('../../public/methodDisabler.js')
-var relationMethodPrefixes = [
-  'login',
-  'logout'
-]
-
 module.exports = function (app) {
+  var mongoDs = app.dataSources.mongoDs
+
   var User = app.models.client
   var Role = app.models.Role
   var RoleMapping = app.models.RoleMapping
 
   var users = [{
-      id: 98989878,
       username: 'MrWooJ',
       email: 'CEO@Flieral.com',
       password: 'Fl13r4lAlirezaPass',
@@ -21,7 +16,6 @@ module.exports = function (app) {
       emailVerified: true
     },
     {
-      id: 98989857,
       username: 'Mohammad4x',
       email: 'CTO@Flieral.com',
       password: 'Fl13r4lMohammadPass',
@@ -32,7 +26,6 @@ module.exports = function (app) {
       emailVerified: true
     },
     {
-      id: 98989873,
       username: 'Support',
       email: 'Support@Flieral.com',
       password: 'Fl13r4lSupportPass',
@@ -44,13 +37,11 @@ module.exports = function (app) {
     }
   ]
 
-  User.replaceOrCreate(users, null, function (err, users) {
-    if (err)
-      throw err
-
+  function createRoles(users) {
     var role1 = {
       name: 'founder'
     }
+
     Role.create(role1, function (err, role) {
       if (err)
         throw err
@@ -84,6 +75,21 @@ module.exports = function (app) {
           throw err
       })
     })
+  }
+
+  User.create(users, function (err, users) {
+    if (err) {
+      User.find({
+        where: {
+          'companyName': 'Flieral'
+        }
+      }, function (err, users) {
+        if (err)
+          throw err
+        createRoles(users)
+      })
+    } else
+      createRoles(users)
   })
 
 }
