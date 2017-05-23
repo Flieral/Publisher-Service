@@ -14,7 +14,7 @@ module.exports = function (application) {
   application.beforeRemote('prototype.__create__placements', function (ctx, modelInstance, next) {
     if (!ctx.args.options.accessToken)
       return next()
-    var whiteList = ['beginningTime', 'endingTime', 'name', 'style', 'status']
+    var whiteList = ['beginningTime', 'endingTime', 'name', 'style', 'status', 'onlineCapacity', 'offlineCapacity', 'priority']
     if (utility.inputChecker(ctx.args.data, whiteList)) {
       application.findById(ctx.req.params.id, function (err, result) {
         if (err)
@@ -50,7 +50,7 @@ module.exports = function (application) {
   application.beforeRemote('prototype.__updateById__placements', function (ctx, modelInstance, next) {
     if (!ctx.args.options.accessToken)
       return next()
-    var whiteList = ['beginningTime', 'endingTime', 'name', 'style', 'status']
+    var whiteList = ['beginningTime', 'endingTime', 'name', 'style', 'status', 'onlineCapacity', 'offlineCapacity', 'priority']
     if (utility.inputChecker(ctx.args.data, whiteList)) {
       var placement = app.models.placement
       placement.findById(ctx.req.params.fk, function (err, response) {

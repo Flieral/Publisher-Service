@@ -32,6 +32,21 @@
     },
     "message": {
       "type": "string"
+    },
+    "priority": {
+      "type": "string",
+      "required": false,
+      "default": "Low"
+    },
+    "onlineCapacity": {
+      "type": "number",
+      "required": false,
+      "default": 3
+    },
+    "offlineCapacity": {
+      "type": "number",
+      "required": false,
+      "default": 3
     }
   },
   "validations": [],
@@ -95,7 +110,7 @@
     }
   ],
   "hidden": [
-    "settingModel"
+
   ],
   "methods": {}
 }

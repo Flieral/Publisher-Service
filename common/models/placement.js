@@ -2,11 +2,13 @@ var placementStyle = require('../../config/placementStyle.json')
 var categoryList = require('../../config/category.json')
 var countryList = require('../../config/country.json')
 var userLabelList = require('../../config/userLabel.json')
+var priorityList = require('../../config/priority.json')
 var utility = require('../../public/utility.js')
 
 module.exports = function (placement) {
 
   placement.validatesInclusionOf('style', { in: placementStyle })
+  placement.validatesInclusionOf('priority', { in: priorityList })
 
   function settingValidator (data, callback) {
     var whiteList = ['category', 'dayParting', 'preferences', 'userLabel', 'country']
