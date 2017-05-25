@@ -5,6 +5,8 @@ var userLabelList = require('../../config/userLabel.json')
 var priorityList = require('../../config/priority.json')
 var utility = require('../../public/utility.js')
 
+var app = require('../../server/server')
+
 module.exports = function (placement) {
 
   placement.validatesInclusionOf('style', { in: placementStyle })
@@ -45,4 +47,82 @@ module.exports = function (placement) {
       return next()
     })
   })
+
+  placement.additiveChain = function (placementHashID, applicationHashID, accountHashID, additiveValue, cb) {
+    var application = app.models.application
+    var publisherAccount = app.models.publisherAccount
+    var addition = 0
+    placement.findById(placementHashID, function (err, placementInst) {
+      if (err)
+        return cb(err, null)
+      addition = placementInst.minCredit + additiveValue
+      placementInst.updateAttribute('minCredit', addition, function (err, response) {
+        if (err)
+          return cb(err, null)
+        application.findById(applicationHashID, function (err, applicationInst) {
+          if (err)
+            return cb(err, null)
+          addition = applicationInst.credit + additiveValue
+          applicationInst.updateAttribute('credit', addition, function (err, response) {
+            if (err)
+              return cb(err, null)
+            publisherAccount.findById(accountHashID, function (err, accountInst) {
+              if (err)
+                return cb(err, null)
+              addition = accountInst.credit + additiveValue
+              accountInst.updateAttribute('credit', addition, function (err, response) {
+                if (err)
+                  return cb(err, null)
+                return cb('successful addition chain')
+              })
+            })
+          })
+        })
+      })
+    })
+  }
+
+  placement.remoteMethod('additiveChain', {
+    accepts: [{
+      arg: 'placementHashID',
+      type: 'string',
+      required: true,
+      http: {
+        source: 'query'
+      }
+    }, {
+      arg: 'applicationHashID',
+      type: 'string',
+      required: true,
+      http: {
+        source: 'query'
+      }
+    }, {
+      arg: 'accountHashID',
+      type: 'string',
+      required: true,
+      http: {
+        source: 'query'
+      }
+    }, {
+      arg: 'additiveValue',
+      type: 'number',
+      required: true,
+      http: {
+        source: 'query'
+      }
+    }],
+    description: 'add additiveValue to particular chain of placement and its publisher and its own account',
+    http: {
+      path: '/additiveChain',
+      verb: 'POST',
+      status: 200,
+      errorStatus: 400
+    },
+    returns: {
+      arg: 'response',
+      type: 'object'
+    }
+  })
+
 }
