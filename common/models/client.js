@@ -290,4 +290,45 @@ module.exports = function (client) {
       if (err) return next(err)
     })
   })
+
+  client.checkout = function (accountHashID, cb) {
+    var placement = app.models.placement
+    var application = app.models.application
+    application.updateAll({clientId: accountHashID}, {credit: 0}, function(err, applicationInfo, applicationInfoCount) {
+      if (err)
+        return cb(err, null)
+      placement.updateAll({clientId: accountHashID}, {minCredit: 0}, function(err, placementInfo, placementInfoCount) {
+        if (err)
+          return cb(err, null)
+        var model = {}
+        model.applications.info = applicationInfo
+        model.applications.count = applicationInfoCount
+        model.placements.info = placementInfo
+        model.placements.count = placementInfoCount
+        return cb(model)
+      })      
+    })
+  }
+
+  client.remoteMethod('checkout', {
+    accepts: [{
+      arg: 'accountHashID',
+      type: 'string',
+      required: true,
+      http: {
+        source: 'query'
+      }
+    }],
+    description: 'checkout credit balance',
+    http: {
+      path: '/checkout',
+      verb: 'POST',
+      status: 200,
+      errorStatus: 400
+    },
+    returns: {
+      arg: 'response',
+      type: 'object'
+    }
+  })
 }
