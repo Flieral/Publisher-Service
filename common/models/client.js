@@ -321,7 +321,7 @@ module.exports = function (client) {
     }],
     description: 'checkout credit balance',
     http: {
-      path: '/checkout',
+      path: ':accountHashID/checkout',
       verb: 'POST',
       status: 200,
       errorStatus: 400
