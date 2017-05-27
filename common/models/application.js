@@ -20,6 +20,7 @@ module.exports = function (application) {
         if (err)
           throw err
         ctx.args.data.clientId = ctx.args.options.accessToken.userId
+        ctx.args.data.applicationId = ctx.req.params.id
         ctx.args.data.minCredit = 0
         if (result.status === statusConfig.disable) {
           ctx.args.data.status = statusConfig.disable
