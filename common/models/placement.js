@@ -54,25 +54,25 @@ module.exports = function (placement) {
     var addition = 0
     placement.findById(placementHashID, function (err, placementInst) {
       if (err)
-        return cb(err, null)
+        return cb(err)
       addition = placementInst.minCredit + additiveValue
       placementInst.updateAttribute('minCredit', addition, function (err, response) {
         if (err)
-          return cb(err, null)
+          return cb(err)
         application.findById(applicationHashID, function (err, applicationInst) {
           if (err)
-            return cb(err, null)
+            return cb(err)
           addition = applicationInst.credit + additiveValue
           applicationInst.updateAttribute('credit', addition, function (err, response) {
             if (err)
-              return cb(err, null)
+              return cb(err)
             publisherAccount.findById(accountHashID, function (err, accountInst) {
               if (err)
-                return cb(err, null)
+                return cb(err)
               addition = accountInst.credit + additiveValue
               accountInst.updateAttribute('credit', addition, function (err, response) {
                 if (err)
-                  return cb(err, null)
+                  return cb(err)
                 return cb('successful addition chain')
               })
             })

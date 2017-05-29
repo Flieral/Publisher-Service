@@ -49,14 +49,14 @@ module.exports = function (client) {
       if (result.roles.length == 0) {
         client.findById(modelInstance.userId, function (err, result) {
           if (err)
-            throw err
+            return next(err)
           if (result.clientType.indexOf('Publisher') <= -1) {
             var oldSet = []
             oldSet = result.clientType
             oldSet.push('Publisher')
             result.updateAttribute('clientType', oldSet, function (err, response) {
               if (err)
-                throw err
+                return next(err)
               return next()
             })        
           }
@@ -111,8 +111,7 @@ module.exports = function (client) {
       return next()
     client.findById(ctx.req.params.id, function (err, result) {
       if (err)
-        throw err
-      // Fix Chain
+        return next(err)
       return next()
     })
   })
@@ -160,7 +159,7 @@ module.exports = function (client) {
         var placement = app.models.placement
         placement.find({ where: { 'applicationId': ctx.req.params.fk } }, function (err, placementList) {
           if (err)
-            throw err
+            return next(err)
           var fire = 1
           var callbackFired = false
           for (var i = 0; i < placementList.length; i++) {
@@ -168,7 +167,7 @@ module.exports = function (client) {
             var appPlacement = placementList[i]
             appPlacement.updateAttribute('status', statusJson.disable, function (err, response) {
               if (err)
-                throw err
+                return next(err)
               fire++
               if (fire == placementList.length)
                 return next()  
@@ -297,10 +296,10 @@ module.exports = function (client) {
     var application = app.models.application
     application.updateAll({clientId: accountHashID}, {credit: 0}, function(err, applicationInfo, applicationInfoCount) {
       if (err)
-        return cb(err, null)
+        return cb(err)
       placement.updateAll({clientId: accountHashID}, {minCredit: 0}, function(err, placementInfo, placementInfoCount) {
         if (err)
-          return cb(err, null)
+          return cb(err)
         var model = {}
         model.applications.info = applicationInfo
         model.applications.count = applicationInfoCount

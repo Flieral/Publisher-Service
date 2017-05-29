@@ -18,7 +18,7 @@ module.exports = function (application) {
     if (utility.inputChecker(ctx.args.data, whiteList)) {
       application.findById(ctx.req.params.id, function (err, result) {
         if (err)
-          throw err
+          return next(err)
         ctx.args.data.clientId = ctx.args.options.accessToken.userId
         ctx.args.data.applicationId = ctx.req.params.id
         ctx.args.data.minCredit = 0
@@ -56,7 +56,7 @@ module.exports = function (application) {
       var placement = app.models.placement
       placement.findById(ctx.req.params.fk, function (err, response) {
         if (err)
-          throw err
+          return next(err)
         if (ctx.args.data.endingTime && ctx.args.data.beginningTime) {
           if (ctx.args.data.beginningTime < utility.getUnixTimeStamp())
             return next(new Error('Beginning Time Can not be Less than Now'))
