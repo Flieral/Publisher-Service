@@ -3,6 +3,7 @@ var path = require('path')
 var utility = require('../../public/utility.js')
 var app = require('../../server/server')
 var roleManager = require('../../public/roleManager')
+var emailHelper = require('../Helper/emailHelper')
 
 var PRODUCTION = false
 
@@ -321,7 +322,39 @@ module.exports = function (client) {
     }],
     description: 'checkout credit balance',
     http: {
-      path: ':accountHashID/checkout',
+      path: '/:accountHashID/checkout',
+      verb: 'POST',
+      status: 200,
+      errorStatus: 400
+    },
+    returns: {
+      arg: 'response',
+      type: 'object'
+    }
+  })
+
+
+  client.sendReportEmail = function (accountHashID, cb) {
+    client.findById(accountHashID, function(err, response) {
+      if (err)
+        return cb(err)
+      emailHelper.sendEmail('Flieral Support <hurricanc@gmail.com>', response.email, 'Direct WarningReport', '<h3>Fix the problem in SDK</h3>')
+      cb('successful send report email')
+    })
+  }
+
+  client.remoteMethod('sendReportEmail', {
+    accepts: [{
+      arg: 'accountHashID',
+      type: 'string',
+      required: true,
+      http: {
+        source: 'query'
+      }
+    }],
+    description: 'send report email from flieral to publisher',
+    http: {
+      path: '/:accountHashID/sendReportEmail',
       verb: 'POST',
       status: 200,
       errorStatus: 400
