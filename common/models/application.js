@@ -2,14 +2,19 @@ var osList = require('../../config/operatingSystem.json')
 var statusConfig = require('../../config/status.json')
 var app = require('../../server/server')
 var utility = require('../../public/utility.js')
+var categoryList = require('../../config/category.json')
+var countryList = require('../../config/country.json')
+var userLabelList = require('../../config/userLabel.json')
 
 module.exports = function (application) {
-  
-  application.validatesInclusionOf('operatingSystem', { in: osList })
+
+  application.validatesInclusionOf('operatingSystem', { in: osList
+  })
   var statusList = []
   for (var key in statusConfig)
     statusList.push(statusConfig[key])
-  application.validatesInclusionOf('status', { in: statusList })
+  application.validatesInclusionOf('status', { in: statusList
+  })
 
   application.beforeRemote('prototype.__create__placements', function (ctx, modelInstance, next) {
     if (!ctx.args.options.accessToken)
@@ -22,16 +27,20 @@ module.exports = function (application) {
         ctx.args.data.clientId = ctx.args.options.accessToken.userId
         ctx.args.data.applicationId = ctx.req.params.id
         ctx.args.data.minCredit = 0
+        var settingToCreate = {
+          category: categoryList,
+          country: countryList,
+          userLabel: userLabelList
+        }
+        ctx.args.data.settingModel = settingToCreate
         if (result.status === statusConfig.disable) {
           ctx.args.data.status = statusConfig.disable
           ctx.args.data.message = 'Placement is Disabled'
-        }
-        else {
+        } else {
           if (!ctx.args.data.status) {
             ctx.args.data.status = statusConfig.Enable
-            ctx.args.data.message = 'Placement is Enable'            
-          }
-          else {
+            ctx.args.data.message = 'Placement is Enable'
+          } else {
             if (ctx.args.data.status === statusConfig.disable)
               ctx.args.data.message = 'Placement is Disabled'
             else if (ctx.args.data.status === statusConfig.enable)
@@ -45,7 +54,7 @@ module.exports = function (application) {
         return next()
       })
     } else
-        return next(new Error('White List Error! Allowed Parameters: ' + whiteList.toString()))
+      return next(new Error('White List Error! Allowed Parameters: ' + whiteList.toString()))
   })
 
   application.beforeRemote('prototype.__updateById__placements', function (ctx, modelInstance, next) {
@@ -80,6 +89,6 @@ module.exports = function (application) {
         next()
       })
     } else
-        return next(new Error('White List Error! Allowed Parameters: ' + whiteList.toString()))
+      return next(new Error('White List Error! Allowed Parameters: ' + whiteList.toString()))
   })
 }
