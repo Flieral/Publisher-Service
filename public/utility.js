@@ -16,7 +16,7 @@ module.exports = {
   },
   
   getUnixTimeStamp: function () {
-    return Math.floor((new Date).getTime() / 1000)
+    return Math.floor((new Date).getTime())
   },
 
   stringReplace: function (source, find, replace) {
