@@ -27,26 +27,13 @@ module.exports = function (application) {
         ctx.args.data.clientId = ctx.args.options.accessToken.userId
         ctx.args.data.applicationId = ctx.req.params.id
         ctx.args.data.minCredit = 0
+        ctx.args.data.status = result.status
         var settingToCreate = {
           category: categoryList,
           country: countryList,
           userLabel: userLabelList
         }
         ctx.args.data.settingModel = settingToCreate
-        if (result.status === statusConfig.disable) {
-          ctx.args.data.status = statusConfig.disable
-          ctx.args.data.message = 'Placement is Disabled'
-        } else {
-          if (!ctx.args.data.status) {
-            ctx.args.data.status = statusConfig.Enable
-            ctx.args.data.message = 'Placement is Enable'
-          } else {
-            if (ctx.args.data.status === statusConfig.disable)
-              ctx.args.data.message = 'Placement is Disabled'
-            else if (ctx.args.data.status === statusConfig.enable)
-              ctx.args.data.message = 'Placement is Enabled'
-          }
-        }
         if (ctx.args.data.beginningTime < utility.getUnixTimeStamp())
           return next(new Error('Beginning Time Can not be Less than Now'))
         if (ctx.args.data.endingTime - ctx.args.data.beginningTime < 86400000)

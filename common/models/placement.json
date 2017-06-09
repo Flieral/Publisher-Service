@@ -30,9 +30,6 @@
       "type": "string",
       "required": false
     },
-    "message": {
-      "type": "string"
-    },
     "priority": {
       "type": "string",
       "required": false,

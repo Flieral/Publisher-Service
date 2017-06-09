@@ -20,9 +20,6 @@
     "operatingSystem": {
       "type": "string",
       "required": true
-    },
-    "message": {
-      "type": "string"
     }
   },
   "validations": [],

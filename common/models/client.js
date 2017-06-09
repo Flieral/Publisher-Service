@@ -126,7 +126,6 @@ module.exports = function (client) {
       ctx.args.data.credit = 0
       ctx.args.data.clientId = ctx.args.options.accessToken.userId
       ctx.args.data.status = statusJson.enable
-      ctx.args.data.message = 'Application is Enabled'
       return next()
     }
   })
@@ -141,12 +140,10 @@ module.exports = function (client) {
       if (ctx.args.data.status) {
         if (ctx.args.data.status === statusJson.enable) {
           ctx.args.data.status = statusJson.enable
-          ctx.args.data.message = 'Application is Enabled'
           return next()
         }
         else if (ctx.args.data.status === statusJson.disable) {
           ctx.args.data.status = statusJson.disable
-          ctx.args.data.message = 'Application is Disabed'
           return next()
         }
       }
@@ -305,7 +302,7 @@ module.exports = function (client) {
         model.applications.count = applicationInfoCount
         model.placements.info = placementInfo
         model.placements.count = placementInfoCount
-        return cb(model)
+        return cb(null, model)
       })      
     })
   }
@@ -338,7 +335,7 @@ module.exports = function (client) {
       if (err)
         return cb(err)
       emailHelper.sendEmail('Flieral Support <hurricanc@gmail.com>', response.email, 'Direct WarningReport', '<h3>Fix the problem in SDK</h3>')
-      cb('successful send report email')
+      cb(null, 'successful send report email')
     })
   }
 

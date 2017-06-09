@@ -73,7 +73,7 @@ module.exports = function (placement) {
               accountInst.updateAttribute('credit', addition, function (err, response) {
                 if (err)
                   return cb(err)
-                return cb('successful addition chain')
+                return cb(null, 'successful addition chain')
               })
             })
           })
