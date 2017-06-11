@@ -50,7 +50,7 @@ module.exports = function (placement) {
 
   placement.additiveChain = function (placementHashId, applicationHashId, accountHashId, additiveValue, cb) {
     var application = app.models.application
-    var publisherAccount = app.models.publisherAccount
+    var client = app.models.client
     var addition = 0
     placement.findById(placementHashId, function (err, placementInst) {
       if (err)
@@ -66,11 +66,11 @@ module.exports = function (placement) {
           applicationInst.updateAttribute('credit', addition, function (err, response) {
             if (err)
               return cb(err)
-            publisherAccount.findById(accountHashId, function (err, accountInst) {
+            client.findById(accountHashId, function (err, clientInst) {
               if (err)
                 return cb(err)
-              addition = accountInst.credit + additiveValue
-              accountInst.updateAttribute('credit', addition, function (err, response) {
+              addition = clientInst.publisherAccountModel.credit + additiveValue
+              clientInst.publisherAccount.update({'credit': addition}, function (err, response) {
                 if (err)
                   return cb(err)
                 return cb(null, 'successful addition chain')
