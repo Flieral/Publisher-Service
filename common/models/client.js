@@ -204,7 +204,6 @@ module.exports = function (client) {
       if (err) return res.sendStatus(404)
       user.updateAttribute('password', req.body.password, function (err, user) {
         if (err) return res.sendStatus(404)
-        console.log('> password reset processed successfully');
         res.render('response', {
           title: 'Password reset success',
           content: 'Your password has been reset successfully',
@@ -260,9 +259,6 @@ module.exports = function (client) {
 
     userInstance.verify(options, function (err, response, next) {
       if (err) return next1(err)
-
-      console.log('> verification email sent:', response)
-
       context.res.render('response', {
         title: 'Signed up successfully',
         content: 'Please check your email and click on the verification link before logging in.',
@@ -288,20 +284,20 @@ module.exports = function (client) {
     })
   })
 
-  client.checkout = function (accountHashID, cb) {
+  client.checkout = function (accountHashId, cb) {
     var placement = app.models.placement
     var application = app.models.application
-    application.updateAll({clientId: accountHashID}, {credit: 0}, function(err, applicationInfo, applicationInfoCount) {
+    application.updateAll({clientId: accountHashId}, {credit: 0}, function(err, applicationInfo) {
       if (err)
         return cb(err)
-      placement.updateAll({clientId: accountHashID}, {minCredit: 0}, function(err, placementInfo, placementInfoCount) {
+      placement.updateAll({clientId: accountHashId}, {minCredit: 0}, function(err, placementInfo) {
         if (err)
           return cb(err)
         var model = {}
+        model.applications = {}
         model.applications.info = applicationInfo
-        model.applications.count = applicationInfoCount
+        model.placements = {}
         model.placements.info = placementInfo
-        model.placements.count = placementInfoCount
         return cb(null, model)
       })      
     })
@@ -309,16 +305,15 @@ module.exports = function (client) {
 
   client.remoteMethod('checkout', {
     accepts: [{
-      arg: 'accountHashID',
+      arg: 'accountHashId',
       type: 'string',
-      required: true,
       http: {
         source: 'query'
       }
     }],
     description: 'checkout credit balance',
     http: {
-      path: '/:accountHashID/checkout',
+      path: '/:accountHashId/checkout',
       verb: 'POST',
       status: 200,
       errorStatus: 400
@@ -330,8 +325,8 @@ module.exports = function (client) {
   })
 
 
-  client.sendReportEmail = function (accountHashID, cb) {
-    client.findById(accountHashID, function(err, response) {
+  client.sendReportEmail = function (accountHashId, cb) {
+    client.findById(accountHashId, function(err, response) {
       if (err)
         return cb(err)
       emailHelper.sendEmail('Flieral Support <hurricanc@gmail.com>', response.email, 'Direct WarningReport', '<h3>Fix the problem in SDK</h3>')
@@ -341,7 +336,7 @@ module.exports = function (client) {
 
   client.remoteMethod('sendReportEmail', {
     accepts: [{
-      arg: 'accountHashID',
+      arg: 'accountHashId',
       type: 'string',
       required: true,
       http: {
@@ -350,7 +345,7 @@ module.exports = function (client) {
     }],
     description: 'send report email from flieral to publisher',
     http: {
-      path: '/:accountHashID/sendReportEmail',
+      path: '/:accountHashId/sendReportEmail',
       verb: 'POST',
       status: 200,
       errorStatus: 400

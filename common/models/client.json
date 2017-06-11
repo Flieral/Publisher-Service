@@ -150,6 +150,12 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": "checkout"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__findById__accessTokens"
     }
   ],
   "hidden": [

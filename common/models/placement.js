@@ -48,25 +48,25 @@ module.exports = function (placement) {
     })
   })
 
-  placement.additiveChain = function (placementHashID, applicationHashID, accountHashID, additiveValue, cb) {
+  placement.additiveChain = function (placementHashId, applicationHashId, accountHashId, additiveValue, cb) {
     var application = app.models.application
     var publisherAccount = app.models.publisherAccount
     var addition = 0
-    placement.findById(placementHashID, function (err, placementInst) {
+    placement.findById(placementHashId, function (err, placementInst) {
       if (err)
         return cb(err)
       addition = placementInst.minCredit + additiveValue
       placementInst.updateAttribute('minCredit', addition, function (err, response) {
         if (err)
           return cb(err)
-        application.findById(applicationHashID, function (err, applicationInst) {
+        application.findById(applicationHashId, function (err, applicationInst) {
           if (err)
             return cb(err)
           addition = applicationInst.credit + additiveValue
           applicationInst.updateAttribute('credit', addition, function (err, response) {
             if (err)
               return cb(err)
-            publisherAccount.findById(accountHashID, function (err, accountInst) {
+            publisherAccount.findById(accountHashId, function (err, accountInst) {
               if (err)
                 return cb(err)
               addition = accountInst.credit + additiveValue
@@ -84,21 +84,21 @@ module.exports = function (placement) {
 
   placement.remoteMethod('additiveChain', {
     accepts: [{
-      arg: 'placementHashID',
+      arg: 'placementHashId',
       type: 'string',
       required: true,
       http: {
         source: 'query'
       }
     }, {
-      arg: 'applicationHashID',
+      arg: 'applicationHashId',
       type: 'string',
       required: true,
       http: {
         source: 'query'
       }
     }, {
-      arg: 'accountHashID',
+      arg: 'accountHashId',
       type: 'string',
       required: true,
       http: {
