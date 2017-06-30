@@ -125,4 +125,53 @@ module.exports = function (placement) {
     }
   })
 
+  placement.getAllPlacements = function (ctx, accountHashId, filter, cb) {
+    if (!ctx.req.accessToken)
+      return cb(new Error('missing accessToken'))
+
+    if (ctx.req.accessToken.userId !== accountHashId)
+      return cb(new Error('missmatched accountHashId'))
+
+    placement.find(filter, function(err, result) {
+      if (err)
+        return cb(err, null)
+      return cb(null, result)
+    })
+  }
+
+  placement.remoteMethod('getAllPlacements', {
+    accepts: [{
+      arg: 'ctx',
+      type: 'object',
+      http: {
+        source: 'context'
+      }
+    }, {
+      arg: 'accountHashId',
+      type: 'string',
+      required: true,
+      http: {
+        source: 'query'
+      }
+    }, {
+      arg: 'filter',
+      type: 'object',
+      required: true,
+      http: {
+        source: 'query'
+      }
+    }],
+    description: 'get all placements of related account',
+    http: {
+      path: '/getAllPlacements',
+      verb: 'GET',
+      status: 200,
+      errorStatus: 400
+    },
+    returns: {
+      type: 'object',
+      root: true
+    }
+  })
+
 }

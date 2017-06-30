@@ -56,7 +56,7 @@ module.exports = function (application) {
         if (ctx.args.data.endingTime && ctx.args.data.beginningTime) {
           if (ctx.args.data.beginningTime < utility.getUnixTimeStamp())
             return next(new Error('Beginning Time Can not be Less than Now'))
-          if ((ctx.args.data.endingTime - ctx.args.data.beginningTime < 86400000) || (ctx.ats.data.endingTime < utility.getUnixTimeStamp()))
+          if ((ctx.args.data.endingTime - ctx.args.data.beginningTime < 86400000) || (ctx.args.data.endingTime < utility.getUnixTimeStamp()))
             return next(new Error('Ending Time Can not be Less than Now Or Duration Problem'))
         }
 
